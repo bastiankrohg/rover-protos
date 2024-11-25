@@ -10,6 +10,7 @@ service RoverService {
   rpc TurnLeft(TurnRequest) returns (CommandResponse);
   rpc TurnRight(TurnRequest) returns (CommandResponse);
   rpc TurnOnSpot(TurnRequest) returns (CommandResponse);
+  rpc StopMovement(StopRequest) returns (CommandResponse); // Added StopMovement
 
   // POV
   rpc RotatePeriscope(RotateRequest) returns (CommandResponse);
@@ -30,7 +31,7 @@ message DriveRequest {
   float speed = 1;
 }
 
-message StopRequest {}
+message StopRequest {}  // Already present
 
 message TurnRequest {
   float angle = 1;

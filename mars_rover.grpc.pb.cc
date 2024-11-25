@@ -27,6 +27,7 @@ static const char* RoverService_method_names[] = {
   "/marsrover.RoverService/TurnLeft",
   "/marsrover.RoverService/TurnRight",
   "/marsrover.RoverService/TurnOnSpot",
+  "/marsrover.RoverService/StopMovement",
   "/marsrover.RoverService/RotatePeriscope",
   "/marsrover.RoverService/ControlHeadlights",
   "/marsrover.RoverService/ControlWheelLEDs",
@@ -46,11 +47,12 @@ RoverService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chann
   , rpcmethod_TurnLeft_(RoverService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_TurnRight_(RoverService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_TurnOnSpot_(RoverService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RotatePeriscope_(RoverService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ControlHeadlights_(RoverService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ControlWheelLEDs_(RoverService_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetUltrasoundMeasurement_(RoverService_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetCameraStream_(RoverService_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_StopMovement_(RoverService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RotatePeriscope_(RoverService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ControlHeadlights_(RoverService_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ControlWheelLEDs_(RoverService_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetUltrasoundMeasurement_(RoverService_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetCameraStream_(RoverService_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status RoverService::Stub::DriveForward(::grpc::ClientContext* context, const ::marsrover::DriveRequest& request, ::marsrover::CommandResponse* response) {
@@ -164,6 +166,29 @@ void RoverService::Stub::async::TurnOnSpot(::grpc::ClientContext* context, const
 ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>* RoverService::Stub::AsyncTurnOnSpotRaw(::grpc::ClientContext* context, const ::marsrover::TurnRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncTurnOnSpotRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status RoverService::Stub::StopMovement(::grpc::ClientContext* context, const ::marsrover::StopRequest& request, ::marsrover::CommandResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::marsrover::StopRequest, ::marsrover::CommandResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_StopMovement_, context, request, response);
+}
+
+void RoverService::Stub::async::StopMovement(::grpc::ClientContext* context, const ::marsrover::StopRequest* request, ::marsrover::CommandResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::marsrover::StopRequest, ::marsrover::CommandResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_StopMovement_, context, request, response, std::move(f));
+}
+
+void RoverService::Stub::async::StopMovement(::grpc::ClientContext* context, const ::marsrover::StopRequest* request, ::marsrover::CommandResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_StopMovement_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>* RoverService::Stub::PrepareAsyncStopMovementRaw(::grpc::ClientContext* context, const ::marsrover::StopRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::marsrover::CommandResponse, ::marsrover::StopRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_StopMovement_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>* RoverService::Stub::AsyncStopMovementRaw(::grpc::ClientContext* context, const ::marsrover::StopRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncStopMovementRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -337,6 +362,16 @@ RoverService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RoverService_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< RoverService::Service, ::marsrover::StopRequest, ::marsrover::CommandResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](RoverService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::marsrover::StopRequest* req,
+             ::marsrover::CommandResponse* resp) {
+               return service->StopMovement(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      RoverService_method_names[6],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< RoverService::Service, ::marsrover::RotateRequest, ::marsrover::CommandResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoverService::Service* service,
              ::grpc::ServerContext* ctx,
@@ -345,7 +380,7 @@ RoverService::Service::Service() {
                return service->RotatePeriscope(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      RoverService_method_names[6],
+      RoverService_method_names[7],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< RoverService::Service, ::marsrover::LEDRequest, ::marsrover::CommandResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoverService::Service* service,
@@ -355,7 +390,7 @@ RoverService::Service::Service() {
                return service->ControlHeadlights(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      RoverService_method_names[7],
+      RoverService_method_names[8],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< RoverService::Service, ::marsrover::WheelLEDRequest, ::marsrover::CommandResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoverService::Service* service,
@@ -365,7 +400,7 @@ RoverService::Service::Service() {
                return service->ControlWheelLEDs(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      RoverService_method_names[8],
+      RoverService_method_names[9],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< RoverService::Service, ::marsrover::UltrasoundRequest, ::marsrover::UltrasoundResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoverService::Service* service,
@@ -375,7 +410,7 @@ RoverService::Service::Service() {
                return service->GetUltrasoundMeasurement(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      RoverService_method_names[9],
+      RoverService_method_names[10],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< RoverService::Service, ::marsrover::CameraStreamRequest, ::marsrover::CameraStreamResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RoverService::Service* service,
@@ -418,6 +453,13 @@ RoverService::Service::~Service() {
 }
 
 ::grpc::Status RoverService::Service::TurnOnSpot(::grpc::ServerContext* context, const ::marsrover::TurnRequest* request, ::marsrover::CommandResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status RoverService::Service::StopMovement(::grpc::ServerContext* context, const ::marsrover::StopRequest* request, ::marsrover::CommandResponse* response) {
   (void) context;
   (void) request;
   (void) response;

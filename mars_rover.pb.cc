@@ -430,7 +430,7 @@ const char descriptor_table_protodef_mars_5frover_2eproto[] ABSL_ATTRIBUTE_SECTI
     "heel_number\030\001 \001(\005\022\n\n\002on\030\002 \001(\010\"\023\n\021Ultraso"
     "undRequest\"&\n\022UltrasoundResponse\022\020\n\010dist"
     "ance\030\001 \001(\002\"\025\n\023CameraStreamRequest\"*\n\024Cam"
-    "eraStreamResponse\022\022\n\nstream_url\030\001 \001(\t2\340\005"
+    "eraStreamResponse\022\022\n\nstream_url\030\001 \001(\t2\244\006"
     "\n\014RoverService\022C\n\014DriveForward\022\027.marsrov"
     "er.DriveRequest\032\032.marsrover.CommandRespo"
     "nse\022>\n\007Reverse\022\027.marsrover.DriveRequest\032"
@@ -439,23 +439,25 @@ const char descriptor_table_protodef_mars_5frover_2eproto[] ABSL_ATTRIBUTE_SECTI
     "andResponse\022\?\n\tTurnRight\022\026.marsrover.Tur"
     "nRequest\032\032.marsrover.CommandResponse\022@\n\n"
     "TurnOnSpot\022\026.marsrover.TurnRequest\032\032.mar"
-    "srover.CommandResponse\022G\n\017RotatePeriscop"
-    "e\022\030.marsrover.RotateRequest\032\032.marsrover."
-    "CommandResponse\022F\n\021ControlHeadlights\022\025.m"
-    "arsrover.LEDRequest\032\032.marsrover.CommandR"
-    "esponse\022J\n\020ControlWheelLEDs\022\032.marsrover."
-    "WheelLEDRequest\032\032.marsrover.CommandRespo"
-    "nse\022W\n\030GetUltrasoundMeasurement\022\034.marsro"
-    "ver.UltrasoundRequest\032\035.marsrover.Ultras"
-    "oundResponse\022R\n\017GetCameraStream\022\036.marsro"
-    "ver.CameraStreamRequest\032\037.marsrover.Came"
-    "raStreamResponseb\006proto3"
+    "srover.CommandResponse\022B\n\014StopMovement\022\026"
+    ".marsrover.StopRequest\032\032.marsrover.Comma"
+    "ndResponse\022G\n\017RotatePeriscope\022\030.marsrove"
+    "r.RotateRequest\032\032.marsrover.CommandRespo"
+    "nse\022F\n\021ControlHeadlights\022\025.marsrover.LED"
+    "Request\032\032.marsrover.CommandResponse\022J\n\020C"
+    "ontrolWheelLEDs\022\032.marsrover.WheelLEDRequ"
+    "est\032\032.marsrover.CommandResponse\022W\n\030GetUl"
+    "trasoundMeasurement\022\034.marsrover.Ultrasou"
+    "ndRequest\032\035.marsrover.UltrasoundResponse"
+    "\022R\n\017GetCameraStream\022\036.marsrover.CameraSt"
+    "reamRequest\032\037.marsrover.CameraStreamResp"
+    "onseb\006proto3"
 };
 static ::absl::once_flag descriptor_table_mars_5frover_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_mars_5frover_2eproto = {
     false,
     false,
-    1144,
+    1212,
     descriptor_table_protodef_mars_5frover_2eproto,
     "mars_rover.proto",
     &descriptor_table_mars_5frover_2eproto_once,

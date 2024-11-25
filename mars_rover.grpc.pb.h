@@ -72,6 +72,14 @@ class RoverService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::marsrover::CommandResponse>> PrepareAsyncTurnOnSpot(::grpc::ClientContext* context, const ::marsrover::TurnRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::marsrover::CommandResponse>>(PrepareAsyncTurnOnSpotRaw(context, request, cq));
     }
+    virtual ::grpc::Status StopMovement(::grpc::ClientContext* context, const ::marsrover::StopRequest& request, ::marsrover::CommandResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::marsrover::CommandResponse>> AsyncStopMovement(::grpc::ClientContext* context, const ::marsrover::StopRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::marsrover::CommandResponse>>(AsyncStopMovementRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::marsrover::CommandResponse>> PrepareAsyncStopMovement(::grpc::ClientContext* context, const ::marsrover::StopRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::marsrover::CommandResponse>>(PrepareAsyncStopMovementRaw(context, request, cq));
+    }
+    // Added StopMovement
     // POV
     virtual ::grpc::Status RotatePeriscope(::grpc::ClientContext* context, const ::marsrover::RotateRequest& request, ::marsrover::CommandResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::marsrover::CommandResponse>> AsyncRotatePeriscope(::grpc::ClientContext* context, const ::marsrover::RotateRequest& request, ::grpc::CompletionQueue* cq) {
@@ -126,6 +134,9 @@ class RoverService final {
       virtual void TurnRight(::grpc::ClientContext* context, const ::marsrover::TurnRequest* request, ::marsrover::CommandResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void TurnOnSpot(::grpc::ClientContext* context, const ::marsrover::TurnRequest* request, ::marsrover::CommandResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void TurnOnSpot(::grpc::ClientContext* context, const ::marsrover::TurnRequest* request, ::marsrover::CommandResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void StopMovement(::grpc::ClientContext* context, const ::marsrover::StopRequest* request, ::marsrover::CommandResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void StopMovement(::grpc::ClientContext* context, const ::marsrover::StopRequest* request, ::marsrover::CommandResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // Added StopMovement
       // POV
       virtual void RotatePeriscope(::grpc::ClientContext* context, const ::marsrover::RotateRequest* request, ::marsrover::CommandResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void RotatePeriscope(::grpc::ClientContext* context, const ::marsrover::RotateRequest* request, ::marsrover::CommandResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
@@ -155,6 +166,8 @@ class RoverService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::marsrover::CommandResponse>* PrepareAsyncTurnRightRaw(::grpc::ClientContext* context, const ::marsrover::TurnRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::marsrover::CommandResponse>* AsyncTurnOnSpotRaw(::grpc::ClientContext* context, const ::marsrover::TurnRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::marsrover::CommandResponse>* PrepareAsyncTurnOnSpotRaw(::grpc::ClientContext* context, const ::marsrover::TurnRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::marsrover::CommandResponse>* AsyncStopMovementRaw(::grpc::ClientContext* context, const ::marsrover::StopRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::marsrover::CommandResponse>* PrepareAsyncStopMovementRaw(::grpc::ClientContext* context, const ::marsrover::StopRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::marsrover::CommandResponse>* AsyncRotatePeriscopeRaw(::grpc::ClientContext* context, const ::marsrover::RotateRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::marsrover::CommandResponse>* PrepareAsyncRotatePeriscopeRaw(::grpc::ClientContext* context, const ::marsrover::RotateRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::marsrover::CommandResponse>* AsyncControlHeadlightsRaw(::grpc::ClientContext* context, const ::marsrover::LEDRequest& request, ::grpc::CompletionQueue* cq) = 0;
@@ -204,6 +217,13 @@ class RoverService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>> PrepareAsyncTurnOnSpot(::grpc::ClientContext* context, const ::marsrover::TurnRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>>(PrepareAsyncTurnOnSpotRaw(context, request, cq));
     }
+    ::grpc::Status StopMovement(::grpc::ClientContext* context, const ::marsrover::StopRequest& request, ::marsrover::CommandResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>> AsyncStopMovement(::grpc::ClientContext* context, const ::marsrover::StopRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>>(AsyncStopMovementRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>> PrepareAsyncStopMovement(::grpc::ClientContext* context, const ::marsrover::StopRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>>(PrepareAsyncStopMovementRaw(context, request, cq));
+    }
     ::grpc::Status RotatePeriscope(::grpc::ClientContext* context, const ::marsrover::RotateRequest& request, ::marsrover::CommandResponse* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>> AsyncRotatePeriscope(::grpc::ClientContext* context, const ::marsrover::RotateRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>>(AsyncRotatePeriscopeRaw(context, request, cq));
@@ -252,6 +272,8 @@ class RoverService final {
       void TurnRight(::grpc::ClientContext* context, const ::marsrover::TurnRequest* request, ::marsrover::CommandResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void TurnOnSpot(::grpc::ClientContext* context, const ::marsrover::TurnRequest* request, ::marsrover::CommandResponse* response, std::function<void(::grpc::Status)>) override;
       void TurnOnSpot(::grpc::ClientContext* context, const ::marsrover::TurnRequest* request, ::marsrover::CommandResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void StopMovement(::grpc::ClientContext* context, const ::marsrover::StopRequest* request, ::marsrover::CommandResponse* response, std::function<void(::grpc::Status)>) override;
+      void StopMovement(::grpc::ClientContext* context, const ::marsrover::StopRequest* request, ::marsrover::CommandResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void RotatePeriscope(::grpc::ClientContext* context, const ::marsrover::RotateRequest* request, ::marsrover::CommandResponse* response, std::function<void(::grpc::Status)>) override;
       void RotatePeriscope(::grpc::ClientContext* context, const ::marsrover::RotateRequest* request, ::marsrover::CommandResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void ControlHeadlights(::grpc::ClientContext* context, const ::marsrover::LEDRequest* request, ::marsrover::CommandResponse* response, std::function<void(::grpc::Status)>) override;
@@ -283,6 +305,8 @@ class RoverService final {
     ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>* PrepareAsyncTurnRightRaw(::grpc::ClientContext* context, const ::marsrover::TurnRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>* AsyncTurnOnSpotRaw(::grpc::ClientContext* context, const ::marsrover::TurnRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>* PrepareAsyncTurnOnSpotRaw(::grpc::ClientContext* context, const ::marsrover::TurnRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>* AsyncStopMovementRaw(::grpc::ClientContext* context, const ::marsrover::StopRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>* PrepareAsyncStopMovementRaw(::grpc::ClientContext* context, const ::marsrover::StopRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>* AsyncRotatePeriscopeRaw(::grpc::ClientContext* context, const ::marsrover::RotateRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>* PrepareAsyncRotatePeriscopeRaw(::grpc::ClientContext* context, const ::marsrover::RotateRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::marsrover::CommandResponse>* AsyncControlHeadlightsRaw(::grpc::ClientContext* context, const ::marsrover::LEDRequest& request, ::grpc::CompletionQueue* cq) override;
@@ -298,6 +322,7 @@ class RoverService final {
     const ::grpc::internal::RpcMethod rpcmethod_TurnLeft_;
     const ::grpc::internal::RpcMethod rpcmethod_TurnRight_;
     const ::grpc::internal::RpcMethod rpcmethod_TurnOnSpot_;
+    const ::grpc::internal::RpcMethod rpcmethod_StopMovement_;
     const ::grpc::internal::RpcMethod rpcmethod_RotatePeriscope_;
     const ::grpc::internal::RpcMethod rpcmethod_ControlHeadlights_;
     const ::grpc::internal::RpcMethod rpcmethod_ControlWheelLEDs_;
@@ -317,6 +342,8 @@ class RoverService final {
     virtual ::grpc::Status TurnLeft(::grpc::ServerContext* context, const ::marsrover::TurnRequest* request, ::marsrover::CommandResponse* response);
     virtual ::grpc::Status TurnRight(::grpc::ServerContext* context, const ::marsrover::TurnRequest* request, ::marsrover::CommandResponse* response);
     virtual ::grpc::Status TurnOnSpot(::grpc::ServerContext* context, const ::marsrover::TurnRequest* request, ::marsrover::CommandResponse* response);
+    virtual ::grpc::Status StopMovement(::grpc::ServerContext* context, const ::marsrover::StopRequest* request, ::marsrover::CommandResponse* response);
+    // Added StopMovement
     // POV
     virtual ::grpc::Status RotatePeriscope(::grpc::ServerContext* context, const ::marsrover::RotateRequest* request, ::marsrover::CommandResponse* response);
     virtual ::grpc::Status ControlHeadlights(::grpc::ServerContext* context, const ::marsrover::LEDRequest* request, ::marsrover::CommandResponse* response);
@@ -428,12 +455,32 @@ class RoverService final {
     }
   };
   template <class BaseClass>
+  class WithAsyncMethod_StopMovement : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_StopMovement() {
+      ::grpc::Service::MarkMethodAsync(5);
+    }
+    ~WithAsyncMethod_StopMovement() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StopMovement(::grpc::ServerContext* /*context*/, const ::marsrover::StopRequest* /*request*/, ::marsrover::CommandResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestStopMovement(::grpc::ServerContext* context, ::marsrover::StopRequest* request, ::grpc::ServerAsyncResponseWriter< ::marsrover::CommandResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_RotatePeriscope : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_RotatePeriscope() {
-      ::grpc::Service::MarkMethodAsync(5);
+      ::grpc::Service::MarkMethodAsync(6);
     }
     ~WithAsyncMethod_RotatePeriscope() override {
       BaseClassMustBeDerivedFromService(this);
@@ -444,7 +491,7 @@ class RoverService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestRotatePeriscope(::grpc::ServerContext* context, ::marsrover::RotateRequest* request, ::grpc::ServerAsyncResponseWriter< ::marsrover::CommandResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -453,7 +500,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_ControlHeadlights() {
-      ::grpc::Service::MarkMethodAsync(6);
+      ::grpc::Service::MarkMethodAsync(7);
     }
     ~WithAsyncMethod_ControlHeadlights() override {
       BaseClassMustBeDerivedFromService(this);
@@ -464,7 +511,7 @@ class RoverService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestControlHeadlights(::grpc::ServerContext* context, ::marsrover::LEDRequest* request, ::grpc::ServerAsyncResponseWriter< ::marsrover::CommandResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -473,7 +520,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_ControlWheelLEDs() {
-      ::grpc::Service::MarkMethodAsync(7);
+      ::grpc::Service::MarkMethodAsync(8);
     }
     ~WithAsyncMethod_ControlWheelLEDs() override {
       BaseClassMustBeDerivedFromService(this);
@@ -484,7 +531,7 @@ class RoverService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestControlWheelLEDs(::grpc::ServerContext* context, ::marsrover::WheelLEDRequest* request, ::grpc::ServerAsyncResponseWriter< ::marsrover::CommandResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -493,7 +540,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_GetUltrasoundMeasurement() {
-      ::grpc::Service::MarkMethodAsync(8);
+      ::grpc::Service::MarkMethodAsync(9);
     }
     ~WithAsyncMethod_GetUltrasoundMeasurement() override {
       BaseClassMustBeDerivedFromService(this);
@@ -504,7 +551,7 @@ class RoverService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestGetUltrasoundMeasurement(::grpc::ServerContext* context, ::marsrover::UltrasoundRequest* request, ::grpc::ServerAsyncResponseWriter< ::marsrover::UltrasoundResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -513,7 +560,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_GetCameraStream() {
-      ::grpc::Service::MarkMethodAsync(9);
+      ::grpc::Service::MarkMethodAsync(10);
     }
     ~WithAsyncMethod_GetCameraStream() override {
       BaseClassMustBeDerivedFromService(this);
@@ -524,10 +571,10 @@ class RoverService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestGetCameraStream(::grpc::ServerContext* context, ::marsrover::CameraStreamRequest* request, ::grpc::ServerAsyncResponseWriter< ::marsrover::CameraStreamResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_DriveForward<WithAsyncMethod_Reverse<WithAsyncMethod_TurnLeft<WithAsyncMethod_TurnRight<WithAsyncMethod_TurnOnSpot<WithAsyncMethod_RotatePeriscope<WithAsyncMethod_ControlHeadlights<WithAsyncMethod_ControlWheelLEDs<WithAsyncMethod_GetUltrasoundMeasurement<WithAsyncMethod_GetCameraStream<Service > > > > > > > > > > AsyncService;
+  typedef WithAsyncMethod_DriveForward<WithAsyncMethod_Reverse<WithAsyncMethod_TurnLeft<WithAsyncMethod_TurnRight<WithAsyncMethod_TurnOnSpot<WithAsyncMethod_StopMovement<WithAsyncMethod_RotatePeriscope<WithAsyncMethod_ControlHeadlights<WithAsyncMethod_ControlWheelLEDs<WithAsyncMethod_GetUltrasoundMeasurement<WithAsyncMethod_GetCameraStream<Service > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_DriveForward : public BaseClass {
    private:
@@ -664,18 +711,45 @@ class RoverService final {
       ::grpc::CallbackServerContext* /*context*/, const ::marsrover::TurnRequest* /*request*/, ::marsrover::CommandResponse* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithCallbackMethod_StopMovement : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_StopMovement() {
+      ::grpc::Service::MarkMethodCallback(5,
+          new ::grpc::internal::CallbackUnaryHandler< ::marsrover::StopRequest, ::marsrover::CommandResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::marsrover::StopRequest* request, ::marsrover::CommandResponse* response) { return this->StopMovement(context, request, response); }));}
+    void SetMessageAllocatorFor_StopMovement(
+        ::grpc::MessageAllocator< ::marsrover::StopRequest, ::marsrover::CommandResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::marsrover::StopRequest, ::marsrover::CommandResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_StopMovement() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StopMovement(::grpc::ServerContext* /*context*/, const ::marsrover::StopRequest* /*request*/, ::marsrover::CommandResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* StopMovement(
+      ::grpc::CallbackServerContext* /*context*/, const ::marsrover::StopRequest* /*request*/, ::marsrover::CommandResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithCallbackMethod_RotatePeriscope : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_RotatePeriscope() {
-      ::grpc::Service::MarkMethodCallback(5,
+      ::grpc::Service::MarkMethodCallback(6,
           new ::grpc::internal::CallbackUnaryHandler< ::marsrover::RotateRequest, ::marsrover::CommandResponse>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::marsrover::RotateRequest* request, ::marsrover::CommandResponse* response) { return this->RotatePeriscope(context, request, response); }));}
     void SetMessageAllocatorFor_RotatePeriscope(
         ::grpc::MessageAllocator< ::marsrover::RotateRequest, ::marsrover::CommandResponse>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(6);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::marsrover::RotateRequest, ::marsrover::CommandResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -696,13 +770,13 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_ControlHeadlights() {
-      ::grpc::Service::MarkMethodCallback(6,
+      ::grpc::Service::MarkMethodCallback(7,
           new ::grpc::internal::CallbackUnaryHandler< ::marsrover::LEDRequest, ::marsrover::CommandResponse>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::marsrover::LEDRequest* request, ::marsrover::CommandResponse* response) { return this->ControlHeadlights(context, request, response); }));}
     void SetMessageAllocatorFor_ControlHeadlights(
         ::grpc::MessageAllocator< ::marsrover::LEDRequest, ::marsrover::CommandResponse>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(6);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(7);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::marsrover::LEDRequest, ::marsrover::CommandResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -723,13 +797,13 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_ControlWheelLEDs() {
-      ::grpc::Service::MarkMethodCallback(7,
+      ::grpc::Service::MarkMethodCallback(8,
           new ::grpc::internal::CallbackUnaryHandler< ::marsrover::WheelLEDRequest, ::marsrover::CommandResponse>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::marsrover::WheelLEDRequest* request, ::marsrover::CommandResponse* response) { return this->ControlWheelLEDs(context, request, response); }));}
     void SetMessageAllocatorFor_ControlWheelLEDs(
         ::grpc::MessageAllocator< ::marsrover::WheelLEDRequest, ::marsrover::CommandResponse>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(7);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(8);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::marsrover::WheelLEDRequest, ::marsrover::CommandResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -750,13 +824,13 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_GetUltrasoundMeasurement() {
-      ::grpc::Service::MarkMethodCallback(8,
+      ::grpc::Service::MarkMethodCallback(9,
           new ::grpc::internal::CallbackUnaryHandler< ::marsrover::UltrasoundRequest, ::marsrover::UltrasoundResponse>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::marsrover::UltrasoundRequest* request, ::marsrover::UltrasoundResponse* response) { return this->GetUltrasoundMeasurement(context, request, response); }));}
     void SetMessageAllocatorFor_GetUltrasoundMeasurement(
         ::grpc::MessageAllocator< ::marsrover::UltrasoundRequest, ::marsrover::UltrasoundResponse>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(8);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(9);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::marsrover::UltrasoundRequest, ::marsrover::UltrasoundResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -777,13 +851,13 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_GetCameraStream() {
-      ::grpc::Service::MarkMethodCallback(9,
+      ::grpc::Service::MarkMethodCallback(10,
           new ::grpc::internal::CallbackUnaryHandler< ::marsrover::CameraStreamRequest, ::marsrover::CameraStreamResponse>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::marsrover::CameraStreamRequest* request, ::marsrover::CameraStreamResponse* response) { return this->GetCameraStream(context, request, response); }));}
     void SetMessageAllocatorFor_GetCameraStream(
         ::grpc::MessageAllocator< ::marsrover::CameraStreamRequest, ::marsrover::CameraStreamResponse>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(9);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(10);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::marsrover::CameraStreamRequest, ::marsrover::CameraStreamResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -798,7 +872,7 @@ class RoverService final {
     virtual ::grpc::ServerUnaryReactor* GetCameraStream(
       ::grpc::CallbackServerContext* /*context*/, const ::marsrover::CameraStreamRequest* /*request*/, ::marsrover::CameraStreamResponse* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_DriveForward<WithCallbackMethod_Reverse<WithCallbackMethod_TurnLeft<WithCallbackMethod_TurnRight<WithCallbackMethod_TurnOnSpot<WithCallbackMethod_RotatePeriscope<WithCallbackMethod_ControlHeadlights<WithCallbackMethod_ControlWheelLEDs<WithCallbackMethod_GetUltrasoundMeasurement<WithCallbackMethod_GetCameraStream<Service > > > > > > > > > > CallbackService;
+  typedef WithCallbackMethod_DriveForward<WithCallbackMethod_Reverse<WithCallbackMethod_TurnLeft<WithCallbackMethod_TurnRight<WithCallbackMethod_TurnOnSpot<WithCallbackMethod_StopMovement<WithCallbackMethod_RotatePeriscope<WithCallbackMethod_ControlHeadlights<WithCallbackMethod_ControlWheelLEDs<WithCallbackMethod_GetUltrasoundMeasurement<WithCallbackMethod_GetCameraStream<Service > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_DriveForward : public BaseClass {
@@ -886,12 +960,29 @@ class RoverService final {
     }
   };
   template <class BaseClass>
+  class WithGenericMethod_StopMovement : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_StopMovement() {
+      ::grpc::Service::MarkMethodGeneric(5);
+    }
+    ~WithGenericMethod_StopMovement() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StopMovement(::grpc::ServerContext* /*context*/, const ::marsrover::StopRequest* /*request*/, ::marsrover::CommandResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
   class WithGenericMethod_RotatePeriscope : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_RotatePeriscope() {
-      ::grpc::Service::MarkMethodGeneric(5);
+      ::grpc::Service::MarkMethodGeneric(6);
     }
     ~WithGenericMethod_RotatePeriscope() override {
       BaseClassMustBeDerivedFromService(this);
@@ -908,7 +999,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_ControlHeadlights() {
-      ::grpc::Service::MarkMethodGeneric(6);
+      ::grpc::Service::MarkMethodGeneric(7);
     }
     ~WithGenericMethod_ControlHeadlights() override {
       BaseClassMustBeDerivedFromService(this);
@@ -925,7 +1016,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_ControlWheelLEDs() {
-      ::grpc::Service::MarkMethodGeneric(7);
+      ::grpc::Service::MarkMethodGeneric(8);
     }
     ~WithGenericMethod_ControlWheelLEDs() override {
       BaseClassMustBeDerivedFromService(this);
@@ -942,7 +1033,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_GetUltrasoundMeasurement() {
-      ::grpc::Service::MarkMethodGeneric(8);
+      ::grpc::Service::MarkMethodGeneric(9);
     }
     ~WithGenericMethod_GetUltrasoundMeasurement() override {
       BaseClassMustBeDerivedFromService(this);
@@ -959,7 +1050,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_GetCameraStream() {
-      ::grpc::Service::MarkMethodGeneric(9);
+      ::grpc::Service::MarkMethodGeneric(10);
     }
     ~WithGenericMethod_GetCameraStream() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1071,12 +1162,32 @@ class RoverService final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_StopMovement : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_StopMovement() {
+      ::grpc::Service::MarkMethodRaw(5);
+    }
+    ~WithRawMethod_StopMovement() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StopMovement(::grpc::ServerContext* /*context*/, const ::marsrover::StopRequest* /*request*/, ::marsrover::CommandResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestStopMovement(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_RotatePeriscope : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_RotatePeriscope() {
-      ::grpc::Service::MarkMethodRaw(5);
+      ::grpc::Service::MarkMethodRaw(6);
     }
     ~WithRawMethod_RotatePeriscope() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1087,7 +1198,7 @@ class RoverService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestRotatePeriscope(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1096,7 +1207,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_ControlHeadlights() {
-      ::grpc::Service::MarkMethodRaw(6);
+      ::grpc::Service::MarkMethodRaw(7);
     }
     ~WithRawMethod_ControlHeadlights() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1107,7 +1218,7 @@ class RoverService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestControlHeadlights(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1116,7 +1227,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_ControlWheelLEDs() {
-      ::grpc::Service::MarkMethodRaw(7);
+      ::grpc::Service::MarkMethodRaw(8);
     }
     ~WithRawMethod_ControlWheelLEDs() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1127,7 +1238,7 @@ class RoverService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestControlWheelLEDs(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1136,7 +1247,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_GetUltrasoundMeasurement() {
-      ::grpc::Service::MarkMethodRaw(8);
+      ::grpc::Service::MarkMethodRaw(9);
     }
     ~WithRawMethod_GetUltrasoundMeasurement() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1147,7 +1258,7 @@ class RoverService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestGetUltrasoundMeasurement(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1156,7 +1267,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_GetCameraStream() {
-      ::grpc::Service::MarkMethodRaw(9);
+      ::grpc::Service::MarkMethodRaw(10);
     }
     ~WithRawMethod_GetCameraStream() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1167,7 +1278,7 @@ class RoverService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestGetCameraStream(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1281,12 +1392,34 @@ class RoverService final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithRawCallbackMethod_StopMovement : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_StopMovement() {
+      ::grpc::Service::MarkMethodRawCallback(5,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->StopMovement(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_StopMovement() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StopMovement(::grpc::ServerContext* /*context*/, const ::marsrover::StopRequest* /*request*/, ::marsrover::CommandResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* StopMovement(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_RotatePeriscope : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_RotatePeriscope() {
-      ::grpc::Service::MarkMethodRawCallback(5,
+      ::grpc::Service::MarkMethodRawCallback(6,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->RotatePeriscope(context, request, response); }));
@@ -1308,7 +1441,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_ControlHeadlights() {
-      ::grpc::Service::MarkMethodRawCallback(6,
+      ::grpc::Service::MarkMethodRawCallback(7,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ControlHeadlights(context, request, response); }));
@@ -1330,7 +1463,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_ControlWheelLEDs() {
-      ::grpc::Service::MarkMethodRawCallback(7,
+      ::grpc::Service::MarkMethodRawCallback(8,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ControlWheelLEDs(context, request, response); }));
@@ -1352,7 +1485,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_GetUltrasoundMeasurement() {
-      ::grpc::Service::MarkMethodRawCallback(8,
+      ::grpc::Service::MarkMethodRawCallback(9,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetUltrasoundMeasurement(context, request, response); }));
@@ -1374,7 +1507,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_GetCameraStream() {
-      ::grpc::Service::MarkMethodRawCallback(9,
+      ::grpc::Service::MarkMethodRawCallback(10,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetCameraStream(context, request, response); }));
@@ -1526,12 +1659,39 @@ class RoverService final {
     virtual ::grpc::Status StreamedTurnOnSpot(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::marsrover::TurnRequest,::marsrover::CommandResponse>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
+  class WithStreamedUnaryMethod_StopMovement : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_StopMovement() {
+      ::grpc::Service::MarkMethodStreamed(5,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::marsrover::StopRequest, ::marsrover::CommandResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::marsrover::StopRequest, ::marsrover::CommandResponse>* streamer) {
+                       return this->StreamedStopMovement(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_StopMovement() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status StopMovement(::grpc::ServerContext* /*context*/, const ::marsrover::StopRequest* /*request*/, ::marsrover::CommandResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedStopMovement(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::marsrover::StopRequest,::marsrover::CommandResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_RotatePeriscope : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_RotatePeriscope() {
-      ::grpc::Service::MarkMethodStreamed(5,
+      ::grpc::Service::MarkMethodStreamed(6,
         new ::grpc::internal::StreamedUnaryHandler<
           ::marsrover::RotateRequest, ::marsrover::CommandResponse>(
             [this](::grpc::ServerContext* context,
@@ -1558,7 +1718,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_ControlHeadlights() {
-      ::grpc::Service::MarkMethodStreamed(6,
+      ::grpc::Service::MarkMethodStreamed(7,
         new ::grpc::internal::StreamedUnaryHandler<
           ::marsrover::LEDRequest, ::marsrover::CommandResponse>(
             [this](::grpc::ServerContext* context,
@@ -1585,7 +1745,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_ControlWheelLEDs() {
-      ::grpc::Service::MarkMethodStreamed(7,
+      ::grpc::Service::MarkMethodStreamed(8,
         new ::grpc::internal::StreamedUnaryHandler<
           ::marsrover::WheelLEDRequest, ::marsrover::CommandResponse>(
             [this](::grpc::ServerContext* context,
@@ -1612,7 +1772,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_GetUltrasoundMeasurement() {
-      ::grpc::Service::MarkMethodStreamed(8,
+      ::grpc::Service::MarkMethodStreamed(9,
         new ::grpc::internal::StreamedUnaryHandler<
           ::marsrover::UltrasoundRequest, ::marsrover::UltrasoundResponse>(
             [this](::grpc::ServerContext* context,
@@ -1639,7 +1799,7 @@ class RoverService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_GetCameraStream() {
-      ::grpc::Service::MarkMethodStreamed(9,
+      ::grpc::Service::MarkMethodStreamed(10,
         new ::grpc::internal::StreamedUnaryHandler<
           ::marsrover::CameraStreamRequest, ::marsrover::CameraStreamResponse>(
             [this](::grpc::ServerContext* context,
@@ -1660,9 +1820,9 @@ class RoverService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedGetCameraStream(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::marsrover::CameraStreamRequest,::marsrover::CameraStreamResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_DriveForward<WithStreamedUnaryMethod_Reverse<WithStreamedUnaryMethod_TurnLeft<WithStreamedUnaryMethod_TurnRight<WithStreamedUnaryMethod_TurnOnSpot<WithStreamedUnaryMethod_RotatePeriscope<WithStreamedUnaryMethod_ControlHeadlights<WithStreamedUnaryMethod_ControlWheelLEDs<WithStreamedUnaryMethod_GetUltrasoundMeasurement<WithStreamedUnaryMethod_GetCameraStream<Service > > > > > > > > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_DriveForward<WithStreamedUnaryMethod_Reverse<WithStreamedUnaryMethod_TurnLeft<WithStreamedUnaryMethod_TurnRight<WithStreamedUnaryMethod_TurnOnSpot<WithStreamedUnaryMethod_StopMovement<WithStreamedUnaryMethod_RotatePeriscope<WithStreamedUnaryMethod_ControlHeadlights<WithStreamedUnaryMethod_ControlWheelLEDs<WithStreamedUnaryMethod_GetUltrasoundMeasurement<WithStreamedUnaryMethod_GetCameraStream<Service > > > > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_DriveForward<WithStreamedUnaryMethod_Reverse<WithStreamedUnaryMethod_TurnLeft<WithStreamedUnaryMethod_TurnRight<WithStreamedUnaryMethod_TurnOnSpot<WithStreamedUnaryMethod_RotatePeriscope<WithStreamedUnaryMethod_ControlHeadlights<WithStreamedUnaryMethod_ControlWheelLEDs<WithStreamedUnaryMethod_GetUltrasoundMeasurement<WithStreamedUnaryMethod_GetCameraStream<Service > > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_DriveForward<WithStreamedUnaryMethod_Reverse<WithStreamedUnaryMethod_TurnLeft<WithStreamedUnaryMethod_TurnRight<WithStreamedUnaryMethod_TurnOnSpot<WithStreamedUnaryMethod_StopMovement<WithStreamedUnaryMethod_RotatePeriscope<WithStreamedUnaryMethod_ControlHeadlights<WithStreamedUnaryMethod_ControlWheelLEDs<WithStreamedUnaryMethod_GetUltrasoundMeasurement<WithStreamedUnaryMethod_GetCameraStream<Service > > > > > > > > > > > StreamedService;
 };
 
 }  // namespace marsrover

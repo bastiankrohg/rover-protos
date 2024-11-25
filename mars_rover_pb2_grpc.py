@@ -59,6 +59,11 @@ class RoverServiceStub(object):
                 request_serializer=mars__rover__pb2.TurnRequest.SerializeToString,
                 response_deserializer=mars__rover__pb2.CommandResponse.FromString,
                 _registered_method=True)
+        self.StopMovement = channel.unary_unary(
+                '/marsrover.RoverService/StopMovement',
+                request_serializer=mars__rover__pb2.StopRequest.SerializeToString,
+                response_deserializer=mars__rover__pb2.CommandResponse.FromString,
+                _registered_method=True)
         self.RotatePeriscope = channel.unary_unary(
                 '/marsrover.RoverService/RotatePeriscope',
                 request_serializer=mars__rover__pb2.RotateRequest.SerializeToString,
@@ -117,6 +122,13 @@ class RoverServiceServicer(object):
 
     def TurnOnSpot(self, request, context):
         """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def StopMovement(self, request, context):
+        """Added StopMovement
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -181,6 +193,11 @@ def add_RoverServiceServicer_to_server(servicer, server):
             'TurnOnSpot': grpc.unary_unary_rpc_method_handler(
                     servicer.TurnOnSpot,
                     request_deserializer=mars__rover__pb2.TurnRequest.FromString,
+                    response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
+            ),
+            'StopMovement': grpc.unary_unary_rpc_method_handler(
+                    servicer.StopMovement,
+                    request_deserializer=mars__rover__pb2.StopRequest.FromString,
                     response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
             ),
             'RotatePeriscope': grpc.unary_unary_rpc_method_handler(
@@ -343,6 +360,33 @@ class RoverService(object):
             target,
             '/marsrover.RoverService/TurnOnSpot',
             mars__rover__pb2.TurnRequest.SerializeToString,
+            mars__rover__pb2.CommandResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def StopMovement(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/marsrover.RoverService/StopMovement',
+            mars__rover__pb2.StopRequest.SerializeToString,
             mars__rover__pb2.CommandResponse.FromString,
             options,
             channel_credentials,
