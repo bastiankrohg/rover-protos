@@ -6,6 +6,7 @@ service RoverService {
   // Commands
   // Locomotion
   rpc DriveForward(DriveRequest) returns (CommandResponse);
+  rpc Stop (StopRequest) returns (CommandResponse);
   rpc Reverse(DriveRequest) returns (CommandResponse);
   rpc TurnLeft(TurnRequest) returns (CommandResponse);
   rpc TurnRight(TurnRequest) returns (CommandResponse);
@@ -31,7 +32,7 @@ message DriveRequest {
   float speed = 1;
 }
 
-message StopRequest {}  // Already present
+message StopRequest {} 
 
 message TurnRequest {
   float angle = 1;
