@@ -19,11 +19,6 @@ class RoverServiceStub(object):
                 request_serializer=mars__rover__pb2.DriveRequest.SerializeToString,
                 response_deserializer=mars__rover__pb2.CommandResponse.FromString,
                 )
-        self.Stop = channel.unary_unary(
-                '/marsrover.RoverService/Stop',
-                request_serializer=mars__rover__pb2.StopRequest.SerializeToString,
-                response_deserializer=mars__rover__pb2.CommandResponse.FromString,
-                )
         self.Reverse = channel.unary_unary(
                 '/marsrover.RoverService/Reverse',
                 request_serializer=mars__rover__pb2.DriveRequest.SerializeToString,
@@ -83,12 +78,6 @@ class RoverServiceServicer(object):
         """Commands
         Locomotion
         """
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def Stop(self, request, context):
-        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -166,11 +155,6 @@ def add_RoverServiceServicer_to_server(servicer, server):
                     request_deserializer=mars__rover__pb2.DriveRequest.FromString,
                     response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
             ),
-            'Stop': grpc.unary_unary_rpc_method_handler(
-                    servicer.Stop,
-                    request_deserializer=mars__rover__pb2.StopRequest.FromString,
-                    response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
-            ),
             'Reverse': grpc.unary_unary_rpc_method_handler(
                     servicer.Reverse,
                     request_deserializer=mars__rover__pb2.DriveRequest.FromString,
@@ -244,23 +228,6 @@ class RoverService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/DriveForward',
             mars__rover__pb2.DriveRequest.SerializeToString,
-            mars__rover__pb2.CommandResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def Stop(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/Stop',
-            mars__rover__pb2.StopRequest.SerializeToString,
             mars__rover__pb2.CommandResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
