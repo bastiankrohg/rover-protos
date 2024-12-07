@@ -59,6 +59,26 @@ class RoverServiceStub(object):
                 request_serializer=mars__rover__pb2.WheelLEDRequest.SerializeToString,
                 response_deserializer=mars__rover__pb2.CommandResponse.FromString,
                 )
+        self.MapResource = channel.unary_unary(
+                '/marsrover.RoverService/MapResource',
+                request_serializer=mars__rover__pb2.ResourceObstacleRequest.SerializeToString,
+                response_deserializer=mars__rover__pb2.CommandResponse.FromString,
+                )
+        self.MapObstacle = channel.unary_unary(
+                '/marsrover.RoverService/MapObstacle',
+                request_serializer=mars__rover__pb2.ResourceObstacleRequest.SerializeToString,
+                response_deserializer=mars__rover__pb2.CommandResponse.FromString,
+                )
+        self.ToggleResourceList = channel.unary_unary(
+                '/marsrover.RoverService/ToggleResourceList',
+                request_serializer=mars__rover__pb2.EmptyRequest.SerializeToString,
+                response_deserializer=mars__rover__pb2.CommandResponse.FromString,
+                )
+        self.ToggleObstacleList = channel.unary_unary(
+                '/marsrover.RoverService/ToggleObstacleList',
+                request_serializer=mars__rover__pb2.EmptyRequest.SerializeToString,
+                response_deserializer=mars__rover__pb2.CommandResponse.FromString,
+                )
         self.GetUltrasoundMeasurement = channel.unary_unary(
                 '/marsrover.RoverService/GetUltrasoundMeasurement',
                 request_serializer=mars__rover__pb2.UltrasoundRequest.SerializeToString,
@@ -132,6 +152,32 @@ class RoverServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def MapResource(self, request, context):
+        """Resource and Obstacle Mapping
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def MapObstacle(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ToggleResourceList(self, request, context):
+        """List toggling
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ToggleObstacleList(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetUltrasoundMeasurement(self, request, context):
         """Measurements
         """
@@ -193,6 +239,26 @@ def add_RoverServiceServicer_to_server(servicer, server):
             'ControlWheelLEDs': grpc.unary_unary_rpc_method_handler(
                     servicer.ControlWheelLEDs,
                     request_deserializer=mars__rover__pb2.WheelLEDRequest.FromString,
+                    response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
+            ),
+            'MapResource': grpc.unary_unary_rpc_method_handler(
+                    servicer.MapResource,
+                    request_deserializer=mars__rover__pb2.ResourceObstacleRequest.FromString,
+                    response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
+            ),
+            'MapObstacle': grpc.unary_unary_rpc_method_handler(
+                    servicer.MapObstacle,
+                    request_deserializer=mars__rover__pb2.ResourceObstacleRequest.FromString,
+                    response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
+            ),
+            'ToggleResourceList': grpc.unary_unary_rpc_method_handler(
+                    servicer.ToggleResourceList,
+                    request_deserializer=mars__rover__pb2.EmptyRequest.FromString,
+                    response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
+            ),
+            'ToggleObstacleList': grpc.unary_unary_rpc_method_handler(
+                    servicer.ToggleObstacleList,
+                    request_deserializer=mars__rover__pb2.EmptyRequest.FromString,
                     response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
             ),
             'GetUltrasoundMeasurement': grpc.unary_unary_rpc_method_handler(
@@ -364,6 +430,74 @@ class RoverService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/ControlWheelLEDs',
             mars__rover__pb2.WheelLEDRequest.SerializeToString,
+            mars__rover__pb2.CommandResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def MapResource(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/MapResource',
+            mars__rover__pb2.ResourceObstacleRequest.SerializeToString,
+            mars__rover__pb2.CommandResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def MapObstacle(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/MapObstacle',
+            mars__rover__pb2.ResourceObstacleRequest.SerializeToString,
+            mars__rover__pb2.CommandResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ToggleResourceList(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/ToggleResourceList',
+            mars__rover__pb2.EmptyRequest.SerializeToString,
+            mars__rover__pb2.CommandResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ToggleObstacleList(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/ToggleObstacleList',
+            mars__rover__pb2.EmptyRequest.SerializeToString,
             mars__rover__pb2.CommandResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

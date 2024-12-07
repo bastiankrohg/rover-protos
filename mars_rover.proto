@@ -18,6 +18,13 @@ service RoverService {
   rpc ControlHeadlights(LEDRequest) returns (CommandResponse);
   rpc ControlWheelLEDs(WheelLEDRequest) returns (CommandResponse);
   
+  // Resource and Obstacle Mapping
+  rpc MapResource(ResourceObstacleRequest) returns (CommandResponse);
+  rpc MapObstacle(ResourceObstacleRequest) returns (CommandResponse);
+
+  // List toggling
+  rpc ToggleResourceList(EmptyRequest) returns (CommandResponse);
+  rpc ToggleObstacleList(EmptyRequest) returns (CommandResponse);
 
   // Measurements
   rpc GetUltrasoundMeasurement(UltrasoundRequest) returns (UltrasoundResponse);
@@ -39,6 +46,12 @@ message TurnRequest {
 
 message RotateRequest {
   float angle = 1;
+}
+
+message ResourceObstacleRequest {
+  float distance = 1; // Distance from the rover, as measured with the ultrasound sensor
+  float size = 2;     // Optional size or width of the resource/obstacle
+  string object = 3;   // Optional label to describe the detected item
 }
 
 message CommandResponse {
@@ -68,3 +81,5 @@ message CameraStreamRequest {}
 message CameraStreamResponse {
   string stream_url = 1; // RTSP or HTTP stream URL
 }
+
+message EmptyRequest {}
