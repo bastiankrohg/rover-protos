@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import mars_rover_pb2 as mars__rover__pb2
+from . import mars_rover_pb2 as mars__rover__pb2
 
 
 class RoverServiceStub(object):
