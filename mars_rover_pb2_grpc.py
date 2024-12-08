@@ -79,6 +79,11 @@ class RoverServiceStub(object):
                 request_serializer=mars__rover__pb2.EmptyRequest.SerializeToString,
                 response_deserializer=mars__rover__pb2.CommandResponse.FromString,
                 )
+        self.ToggleScan = channel.unary_unary(
+                '/marsrover.RoverService/ToggleScan',
+                request_serializer=mars__rover__pb2.EmptyRequest.SerializeToString,
+                response_deserializer=mars__rover__pb2.CommandResponse.FromString,
+                )
         self.GetUltrasoundMeasurement = channel.unary_unary(
                 '/marsrover.RoverService/GetUltrasoundMeasurement',
                 request_serializer=mars__rover__pb2.UltrasoundRequest.SerializeToString,
@@ -178,6 +183,13 @@ class RoverServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ToggleScan(self, request, context):
+        """Scanning
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetUltrasoundMeasurement(self, request, context):
         """Measurements
         """
@@ -258,6 +270,11 @@ def add_RoverServiceServicer_to_server(servicer, server):
             ),
             'ToggleObstacleList': grpc.unary_unary_rpc_method_handler(
                     servicer.ToggleObstacleList,
+                    request_deserializer=mars__rover__pb2.EmptyRequest.FromString,
+                    response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
+            ),
+            'ToggleScan': grpc.unary_unary_rpc_method_handler(
+                    servicer.ToggleScan,
                     request_deserializer=mars__rover__pb2.EmptyRequest.FromString,
                     response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
             ),
@@ -497,6 +514,23 @@ class RoverService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/ToggleObstacleList',
+            mars__rover__pb2.EmptyRequest.SerializeToString,
+            mars__rover__pb2.CommandResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ToggleScan(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/ToggleScan',
             mars__rover__pb2.EmptyRequest.SerializeToString,
             mars__rover__pb2.CommandResponse.FromString,
             options, channel_credentials,

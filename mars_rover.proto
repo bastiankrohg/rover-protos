@@ -26,6 +26,9 @@ service RoverService {
   rpc ToggleResourceList(EmptyRequest) returns (CommandResponse);
   rpc ToggleObstacleList(EmptyRequest) returns (CommandResponse);
 
+  // Scanning
+  rpc ToggleScan(EmptyRequest) returns (CommandResponse);
+
   // Measurements
   rpc GetUltrasoundMeasurement(UltrasoundRequest) returns (UltrasoundResponse);
 
