@@ -32,6 +32,8 @@ service RoverService {
   // Measurements
   rpc GetUltrasoundMeasurement(UltrasoundRequest) returns (UltrasoundResponse);
 
+  rpc SaveMap(SaveMapRequest) returns (CommandResponse);
+
   // Camera
   // New service to get the camera stream URL
   rpc GetCameraStream(CameraStreamRequest) returns (CameraStreamResponse);
@@ -77,6 +79,10 @@ message UltrasoundRequest {}
 
 message UltrasoundResponse {
   float distance = 1;
+}
+
+message SaveMapRequest {
+    string file_name = 1;
 }
 
 message CameraStreamRequest {}

@@ -89,6 +89,11 @@ class RoverServiceStub(object):
                 request_serializer=mars__rover__pb2.UltrasoundRequest.SerializeToString,
                 response_deserializer=mars__rover__pb2.UltrasoundResponse.FromString,
                 )
+        self.SaveMap = channel.unary_unary(
+                '/marsrover.RoverService/SaveMap',
+                request_serializer=mars__rover__pb2.SaveMapRequest.SerializeToString,
+                response_deserializer=mars__rover__pb2.CommandResponse.FromString,
+                )
         self.GetCameraStream = channel.unary_unary(
                 '/marsrover.RoverService/GetCameraStream',
                 request_serializer=mars__rover__pb2.CameraStreamRequest.SerializeToString,
@@ -197,6 +202,12 @@ class RoverServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def SaveMap(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetCameraStream(self, request, context):
         """Camera
         New service to get the camera stream URL
@@ -282,6 +293,11 @@ def add_RoverServiceServicer_to_server(servicer, server):
                     servicer.GetUltrasoundMeasurement,
                     request_deserializer=mars__rover__pb2.UltrasoundRequest.FromString,
                     response_serializer=mars__rover__pb2.UltrasoundResponse.SerializeToString,
+            ),
+            'SaveMap': grpc.unary_unary_rpc_method_handler(
+                    servicer.SaveMap,
+                    request_deserializer=mars__rover__pb2.SaveMapRequest.FromString,
+                    response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
             ),
             'GetCameraStream': grpc.unary_unary_rpc_method_handler(
                     servicer.GetCameraStream,
@@ -550,6 +566,23 @@ class RoverService(object):
         return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/GetUltrasoundMeasurement',
             mars__rover__pb2.UltrasoundRequest.SerializeToString,
             mars__rover__pb2.UltrasoundResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def SaveMap(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/SaveMap',
+            mars__rover__pb2.SaveMapRequest.SerializeToString,
+            mars__rover__pb2.CommandResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
