@@ -49,6 +49,21 @@ class RoverServiceStub(object):
                 request_serializer=mars__rover__pb2.TurnAngleRequest.SerializeToString,
                 response_deserializer=mars__rover__pb2.CommandResponse.FromString,
                 )
+        self.SpinAngle = channel.unary_unary(
+                '/marsrover.RoverService/SpinAngle',
+                request_serializer=mars__rover__pb2.RotateAngleRequest.SerializeToString,
+                response_deserializer=mars__rover__pb2.CommandResponse.FromString,
+                )
+        self.TurnAngleForward = channel.unary_unary(
+                '/marsrover.RoverService/TurnAngleForward',
+                request_serializer=mars__rover__pb2.TurnAngleRequest.SerializeToString,
+                response_deserializer=mars__rover__pb2.CommandResponse.FromString,
+                )
+        self.TurnAngleBackward = channel.unary_unary(
+                '/marsrover.RoverService/TurnAngleBackward',
+                request_serializer=mars__rover__pb2.TurnAngleRequest.SerializeToString,
+                response_deserializer=mars__rover__pb2.CommandResponse.FromString,
+                )
         self.Brake = channel.unary_unary(
                 '/marsrover.RoverService/Brake',
                 request_serializer=mars__rover__pb2.StopRequest.SerializeToString,
@@ -159,6 +174,26 @@ class RoverServiceServicer(object):
 
     def TurnAngle(self, request, context):
         """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def SpinAngle(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def TurnAngleForward(self, request, context):
+        """Turning while moving forward
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def TurnAngleBackward(self, request, context):
+        """Turning while moving backward
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -283,6 +318,21 @@ def add_RoverServiceServicer_to_server(servicer, server):
             ),
             'TurnAngle': grpc.unary_unary_rpc_method_handler(
                     servicer.TurnAngle,
+                    request_deserializer=mars__rover__pb2.TurnAngleRequest.FromString,
+                    response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
+            ),
+            'SpinAngle': grpc.unary_unary_rpc_method_handler(
+                    servicer.SpinAngle,
+                    request_deserializer=mars__rover__pb2.RotateAngleRequest.FromString,
+                    response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
+            ),
+            'TurnAngleForward': grpc.unary_unary_rpc_method_handler(
+                    servicer.TurnAngleForward,
+                    request_deserializer=mars__rover__pb2.TurnAngleRequest.FromString,
+                    response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
+            ),
+            'TurnAngleBackward': grpc.unary_unary_rpc_method_handler(
+                    servicer.TurnAngleBackward,
                     request_deserializer=mars__rover__pb2.TurnAngleRequest.FromString,
                     response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
             ),
@@ -475,6 +525,57 @@ class RoverService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/TurnAngle',
+            mars__rover__pb2.TurnAngleRequest.SerializeToString,
+            mars__rover__pb2.CommandResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def SpinAngle(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/SpinAngle',
+            mars__rover__pb2.RotateAngleRequest.SerializeToString,
+            mars__rover__pb2.CommandResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def TurnAngleForward(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/TurnAngleForward',
+            mars__rover__pb2.TurnAngleRequest.SerializeToString,
+            mars__rover__pb2.CommandResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def TurnAngleBackward(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/TurnAngleBackward',
             mars__rover__pb2.TurnAngleRequest.SerializeToString,
             mars__rover__pb2.CommandResponse.FromString,
             options, channel_credentials,

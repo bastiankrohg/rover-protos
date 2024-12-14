@@ -12,9 +12,11 @@ service RoverService {
   rpc TurnRight(TurnRequest) returns (CommandResponse);
   rpc TurnOnSpot(TurnRequest) returns (CommandResponse);
   rpc TurnAngle(TurnAngleRequest) returns (CommandResponse);
+  rpc SpinAngle(RotateAngleRequest) returns (CommandResponse);
+  rpc TurnAngleForward(TurnAngleRequest) returns (CommandResponse);  // Turning while moving forward
+  rpc TurnAngleBackward(TurnAngleRequest) returns (CommandResponse);  // Turning while moving backward
   rpc Brake(StopRequest) returns (CommandResponse); 
   rpc StopMovement(StopRequest) returns (CommandResponse);
-
 
   // POV
   rpc RotatePeriscope(RotateRequest) returns (CommandResponse);
@@ -63,6 +65,11 @@ message RotateRequest {
 }
 
 message TurnAngleRequest {
+  float angle = 1;     // Angle in degrees (positive for right, negative for left)
+  int32 speed = 2;     // Speed of turning
+}
+
+message RotateAngleRequest {
   float angle = 1;     // Angle in degrees (positive for right, negative for left)
   int32 speed = 2;     // Speed of turning
 }
