@@ -7,10 +7,14 @@ service RoverService {
   // Locomotion
   rpc DriveForward(DriveRequest) returns (CommandResponse);
   rpc Reverse(DriveRequest) returns (CommandResponse);
+  rpc MoveDistance(MoveDistanceRequest) returns (CommandResponse);
   rpc TurnLeft(TurnRequest) returns (CommandResponse);
   rpc TurnRight(TurnRequest) returns (CommandResponse);
   rpc TurnOnSpot(TurnRequest) returns (CommandResponse);
-  rpc StopMovement(StopRequest) returns (CommandResponse); // Added StopMovement
+  rpc TurnAngle(TurnAngleRequest) returns (CommandResponse);
+  rpc Brake(StopRequest) returns (CommandResponse); 
+  rpc StopMovement(StopRequest) returns (CommandResponse);
+
 
   // POV
   rpc RotatePeriscope(RotateRequest) returns (CommandResponse);
@@ -45,12 +49,22 @@ message DriveRequest {
 
 message StopRequest {} 
 
+message MoveDistanceRequest {
+  float distance = 1;  // Distance in centimeters (positive for forward, negative for backward)
+  int32 speed = 2;     // Speed of movement
+}
+
 message TurnRequest {
-  float angle = 1;
+  float speed = 1;
 }
 
 message RotateRequest {
-  float angle = 1;
+  float speed = 1;
+}
+
+message TurnAngleRequest {
+  float angle = 1;     // Angle in degrees (positive for right, negative for left)
+  int32 speed = 2;     // Speed of turning
 }
 
 message ResourceObstacleRequest {
@@ -82,7 +96,7 @@ message UltrasoundResponse {
 }
 
 message SaveMapRequest {
-    string file_name = 1;
+  string file_name = 1;
 }
 
 message CameraStreamRequest {}

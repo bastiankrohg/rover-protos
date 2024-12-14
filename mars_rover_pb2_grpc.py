@@ -24,6 +24,11 @@ class RoverServiceStub(object):
                 request_serializer=mars__rover__pb2.DriveRequest.SerializeToString,
                 response_deserializer=mars__rover__pb2.CommandResponse.FromString,
                 )
+        self.MoveDistance = channel.unary_unary(
+                '/marsrover.RoverService/MoveDistance',
+                request_serializer=mars__rover__pb2.MoveDistanceRequest.SerializeToString,
+                response_deserializer=mars__rover__pb2.CommandResponse.FromString,
+                )
         self.TurnLeft = channel.unary_unary(
                 '/marsrover.RoverService/TurnLeft',
                 request_serializer=mars__rover__pb2.TurnRequest.SerializeToString,
@@ -37,6 +42,16 @@ class RoverServiceStub(object):
         self.TurnOnSpot = channel.unary_unary(
                 '/marsrover.RoverService/TurnOnSpot',
                 request_serializer=mars__rover__pb2.TurnRequest.SerializeToString,
+                response_deserializer=mars__rover__pb2.CommandResponse.FromString,
+                )
+        self.TurnAngle = channel.unary_unary(
+                '/marsrover.RoverService/TurnAngle',
+                request_serializer=mars__rover__pb2.TurnAngleRequest.SerializeToString,
+                response_deserializer=mars__rover__pb2.CommandResponse.FromString,
+                )
+        self.Brake = channel.unary_unary(
+                '/marsrover.RoverService/Brake',
+                request_serializer=mars__rover__pb2.StopRequest.SerializeToString,
                 response_deserializer=mars__rover__pb2.CommandResponse.FromString,
                 )
         self.StopMovement = channel.unary_unary(
@@ -118,6 +133,12 @@ class RoverServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def MoveDistance(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def TurnLeft(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -136,9 +157,20 @@ class RoverServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def TurnAngle(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Brake(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def StopMovement(self, request, context):
-        """Added StopMovement
-        """
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -229,6 +261,11 @@ def add_RoverServiceServicer_to_server(servicer, server):
                     request_deserializer=mars__rover__pb2.DriveRequest.FromString,
                     response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
             ),
+            'MoveDistance': grpc.unary_unary_rpc_method_handler(
+                    servicer.MoveDistance,
+                    request_deserializer=mars__rover__pb2.MoveDistanceRequest.FromString,
+                    response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
+            ),
             'TurnLeft': grpc.unary_unary_rpc_method_handler(
                     servicer.TurnLeft,
                     request_deserializer=mars__rover__pb2.TurnRequest.FromString,
@@ -242,6 +279,16 @@ def add_RoverServiceServicer_to_server(servicer, server):
             'TurnOnSpot': grpc.unary_unary_rpc_method_handler(
                     servicer.TurnOnSpot,
                     request_deserializer=mars__rover__pb2.TurnRequest.FromString,
+                    response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
+            ),
+            'TurnAngle': grpc.unary_unary_rpc_method_handler(
+                    servicer.TurnAngle,
+                    request_deserializer=mars__rover__pb2.TurnAngleRequest.FromString,
+                    response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
+            ),
+            'Brake': grpc.unary_unary_rpc_method_handler(
+                    servicer.Brake,
+                    request_deserializer=mars__rover__pb2.StopRequest.FromString,
                     response_serializer=mars__rover__pb2.CommandResponse.SerializeToString,
             ),
             'StopMovement': grpc.unary_unary_rpc_method_handler(
@@ -349,6 +396,23 @@ class RoverService(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def MoveDistance(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/MoveDistance',
+            mars__rover__pb2.MoveDistanceRequest.SerializeToString,
+            mars__rover__pb2.CommandResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def TurnLeft(request,
             target,
             options=(),
@@ -395,6 +459,40 @@ class RoverService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/TurnOnSpot',
             mars__rover__pb2.TurnRequest.SerializeToString,
+            mars__rover__pb2.CommandResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def TurnAngle(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/TurnAngle',
+            mars__rover__pb2.TurnAngleRequest.SerializeToString,
+            mars__rover__pb2.CommandResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Brake(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/marsrover.RoverService/Brake',
+            mars__rover__pb2.StopRequest.SerializeToString,
             mars__rover__pb2.CommandResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
